@@ -12,7 +12,7 @@ git init
 git add .
 
 # Commit the changes to the main branch
-git commit -m "Add initial files for backend"
+git commit -m "Initialize project with basic backend setup"
 
 # Create and switch to the 'main' branch
 git branch -M main
@@ -31,16 +31,16 @@ git push -u origin main
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
 
-# Set the identity for this repository only
-git config user.email "kumaraswini.11.11@gmail.com"
-git config user.name "kumaraswini-11"
+# Set your account's default identity (Local for this Project)
+git config user.email "you@example.com"
+git config user.name "Your Name"
 
 - Omit --global when setting identity for this repository only.
 
+````
 
 - For further information, refer to the [Model Link](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj?origin=share)
 - Further queries and documentation will be added soon.
 
-
-
-````
+db - raw refresh token
+user cookie - encrypted refresh token
