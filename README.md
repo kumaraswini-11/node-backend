@@ -44,3 +44,12 @@ git config user.name "Your Name"
 
 db - raw refresh token
 user cookie - encrypted refresh token
+
+every time a user ressue a access token we are also generating a new refresh token for that user.
+code . - open vs code
+
+youtube backend
+
+In ower IT filled you should learn any language in two different ways one four your understanding and second four interview :) believe yourself and just practice 15-20 day for interview only..🧑‍💻 you can do it
+
+"feat" is short for "feature" and is commonly used as a keyword in Git commit messages to indicate the addition or implementation of a new feature.

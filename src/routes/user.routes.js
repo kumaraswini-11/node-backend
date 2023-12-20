@@ -4,6 +4,7 @@ import {
   loginUser,
   logoutUser,
   refreshAccessToken,
+  changeCurrentPassword,
 } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -25,7 +26,10 @@ router.route("/login").post(loginUser);
 // Secured route for user logout. Requires a valid JWT token for authentication.
 router.route("/logout").post(verifyJWT, logoutUser);
 
-// Check and reissue a new access token.
+// Define a route to check and reissue a new access token.
 router.route("/token").post(refreshAccessToken);
+
+// Route for changing the current user's password. Requires a valid JWT token for authentication.
+router.route("/change-password").post(verifyJWT, changeCurrentPassword);
 
 export default router;
