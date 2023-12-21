@@ -1,0 +1,42 @@
+# .dockerignore
+
+# Ignore node_modules for Node.js applications
+node_modules/
+
+# Ignore development and system files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.DS_Store
+
+# Ignore version control files and directories
+.git
+.gitignore
+
+# Ignore unnecessary documentation files
+README.md
+LICENSE
+CHANGELOG.md
+
+# Ignore testing and CI configuration files
+__tests__
+test/
+tests/
+.travis.yml
+.circleci/
+
+# Ignore editor-specific files
+.vscode/
+.idea/
+
+# Ignore build and output files
+dist/
+build/
+*.log
+
+# Ignore MongoDB data directory
+/data/
+
+# Ignore Docker-specific files
+.dockerignore
+.dockerignore.template

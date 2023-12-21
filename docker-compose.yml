@@ -1,0 +1,47 @@
+# Docker Compose file version
+version: '3.8'
+
+# Service definitions
+services:
+  # MongoDB service for backend data storage
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  # Backend service
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "${PORT}:${PORT}"  # Use the PORT variable from .env for both local and container ports
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    volumes:
+      - ./backend:/app  # Mount the local backend code into the container
+      - /app/node_modules  # Mount node_modules to avoid unnecessary installation in the container
+    restart: unless-stopped  # Restart policy to keep the service running
+
+  # Frontend service
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "${PORT}:80"  # Use the FRONTEND_PORT variable from .env for the local port
+    env_file:
+      - ./frontend/.env
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+# Define volumes
+volumes:
+  mongo_data:  # Persistent volume for MongoDB data storage

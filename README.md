@@ -53,3 +53,18 @@ youtube backend
 In ower IT filled you should learn any language in two different ways one four your understanding and second four interview :) believe yourself and just practice 15-20 day for interview only..🧑‍💻 you can do it
 
 "feat" is short for "feature" and is commonly used as a keyword in Git commit messages to indicate the addition or implementation of a new feature.
+
+useEffect(() => {
+// logic here
+
+return () => {
+// clean up
+};
+}, []); // no dependencies!
+=======================
+
+# Copy custom Nginx configuration including SSL files
+
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx/ssl/server.crt /etc/nginx/ssl/
+COPY nginx/ssl/server.key /etc/nginx/ssl/

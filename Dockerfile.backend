@@ -1,0 +1,45 @@
+# Stage 1: Build Stage
+FROM node:20-alpine as build
+
+# Create a non-root user for enhanced security
+RUN addgroup -g 1001 -S nodeapp && adduser -u 1001 -S nodeapp -G nodeapp
+
+# Set the working directory in the container /app
+WORKDIR /app
+
+# Copy only necessary files for the build process
+COPY package*.json ./
+
+# Install dependencies using npm ci
+RUN npm ci --only=production
+
+# Copy the source code
+COPY . .
+
+# Stage 2: Final Lightweight Image
+FROM build as final
+
+# Copy the non-root user and working directory from the builder stage
+COPY --from=build /app .
+
+# Change to the non-root user for security reasons
+USER nodeapp
+
+# Expose the port on which your backend will run
+EXPOSE 8000
+
+# Define environment variable
+ENV NODE_ENV=production
+
+# Metadata as defined in label schema
+LABEL maintainer="Your Name" \
+  version="1.0" \
+  description="Node.js backend application" \
+  license="ISC"
+
+# Implement a health check using curl
+HEALTHCHECK --interval=30s --timeout=5s \
+  CMD curl -fs http://localhost:8000/ || exit 1
+
+# Specify the command to run on container start or application start
+CMD ["npm", "start"]

@@ -1,0 +1,49 @@
+# Stage 1: Build Stage
+# Use an official Node.js runtime as a parent image
+FROM node:20-alpine as build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy only necessary files for the build process
+COPY package*.json ./
+
+# Install dependencies and prune unnecessary files
+RUN npm ci --production && npm cache clean --force
+
+# Copy the source code
+COPY . .
+
+# Build the React app
+RUN npm run build
+
+# Stage 2: Production Stage
+# Use a smaller base image for the production build
+FROM nginx:alpine
+
+# Set the working directory in the container
+WORKDIR /usr/share/nginx/html
+
+# Copy the build files from the build stage to the nginx public directory
+COPY --from=build /app/build/ .
+
+# Remove default nginx static content
+RUN rm -rf /usr/share/nginx/html/*
+
+# Expose the port on which your frontend will run over HTTPS (usually 443)
+EXPOSE 443
+
+# Specify environment variable for production
+ENV NODE_ENV=production
+
+# Metadata as defined in label schema
+LABEL maintainer="Your Name" \
+  version="1.0" \
+  description="Your React Frontend App" \
+  license="ISC"
+
+# Specify a health check
+HEALTHCHECK --interval=30s --timeout=5s CMD wget -q http://localhost || exit 1
+
+# The default command to start Nginx
+CMD ["nginx", "-g", "daemon off;"]
